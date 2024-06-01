@@ -84,7 +84,7 @@ export default function Home() {
                             <i>@ 2024 </i>
                             <i>developed by inhan</i>
                             <a
-                                href="https://github.com/your-github-username"
+                                href="https://github.com/inhaan/office-bgm/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-base hover:text-gray-600 transition"
