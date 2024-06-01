@@ -1,5 +1,5 @@
 import { memo, useCallback } from "react";
-import { Button, Checkbox } from "inhan-ui";
+import { Button, Checkbox } from "./inhan-ui";
 import { usePlayerStore } from "./playerStore";
 
 export const HeaderToolbar: React.FC = memo(function HeaderToolbar() {

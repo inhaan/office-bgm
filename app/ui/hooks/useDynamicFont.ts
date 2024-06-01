@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { findPositioningParent, useWindowSize } from "inhan-ui";
+import { findPositioningParent, useWindowSize } from "../inhan-ui";
 
 interface UseDynamicFontProps {
     draggableRef: React.RefObject<HTMLElement>;

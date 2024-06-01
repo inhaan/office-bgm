@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { memo, useEffect, useRef, useState } from "react";
 import { usePlayerStore } from "../playerStore";
-import { useDraggable } from "inhan-ui";
+import { useDraggable } from "../inhan-ui";
 import { useDynamicFont } from "../hooks/useDynamicFont";
 
 interface EllapsedWidgetProps {

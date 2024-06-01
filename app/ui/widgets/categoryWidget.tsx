@@ -1,4 +1,4 @@
-import { Button, Checkbox } from "inhan-ui";
+import { Button, Checkbox } from "../inhan-ui";
 import { memo, useCallback, useState } from "react";
 import { usePlayerStore } from "../playerStore";
 import bgm from "@/app/lib/bgm.json";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Baloo_2 } from "next/font/google";
-import { Modal } from "inhan-ui";
+import { Modal } from "./ui/inhan-ui";
 import clsx from "clsx";
 import { CategoryWidget, ClockWidget, EllapsedWidget } from "./ui/widgets";
 import dayjs from "dayjs";

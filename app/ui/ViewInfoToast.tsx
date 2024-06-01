@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import { Toast, isMobileDevice, wait } from "inhan-ui";
+import { Toast, isMobileDevice, wait } from "./inhan-ui";
 import { usePlayerStore } from "./playerStore";
 
 export const ViewInfoToast: React.FC = memo(function ViewInfoToast() {

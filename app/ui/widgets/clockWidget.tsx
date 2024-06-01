@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { usePlayerStore } from "../playerStore";
-import { findPositioningParent, useDraggable, useWindowSize } from "inhan-ui";
+import { findPositioningParent, useDraggable, useWindowSize } from "../inhan-ui";
 import { useDynamicFont } from "../hooks/useDynamicFont";
 
 export const ClockWidget: React.FC = memo(function ClockWidget() {
