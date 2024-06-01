@@ -1,7 +1,7 @@
 {
   "name": "office-bgm",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://office-bgm.com",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
