@@ -1,113 +1,109 @@
-import Image from "next/image";
+"use client";
+
+import { Baloo_2 } from "next/font/google";
+import { Modal } from "inhan-ui";
+import clsx from "clsx";
+import { CategoryWidget, ClockWidget, EllapsedWidget } from "./ui/widgets";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import { useCallback, useRef } from "react";
+import { usePlayerStore } from "./ui/playerStore";
+import { BGMPlayer } from "./ui/BGMPlayer";
+import { PlayerToolbar } from "./ui/PlayerToolbar";
+import { FaGithub } from "react-icons/fa6";
+import { ViewInfoToast } from "./ui/ViewInfoToast";
+import { HeaderToolbar } from "./ui/HeaderToolbar";
+
+dayjs.extend(duration);
+const baloo = Baloo_2({ subsets: ["latin"], weight: ["400", "800"] });
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    const startTime = useRef(Date.now());
+    const playerContainerRef = useRef<HTMLDivElement>(null);
+    const { displayClock, displayEllapsed, displayCategory, setDisplayCategory } = usePlayerStore();
+
+    const onCloseCategory = useCallback(() => {
+        setDisplayCategory(false);
+    }, [setDisplayCategory]);
+
+    const onApplyCategory = useCallback(() => {
+        setDisplayCategory(false);
+    }, [setDisplayCategory]);
+
+    return (
+        <div className="bg-white flex justify-center items-start w-full h-full sm:items-center">
+            <div className="w-full h-full max-w-5xl max-h-max flex flex-col sm:w-4/5 sm:max-h-[600px]">
+                {/* 헤더 */}
+                <header className={clsx("flex flex-col-reverse items-center p-2 sm:p-5 sm:flex-col", baloo.className)}>
+                    <div className="w-full flex flex-col justify-between sm:flex-row">
+                        <div className="flex items-center gap-2 font-extrabold text-xl self-start sm:text-2xl">
+                            Office BGM
+                        </div>
+                        <div className="flex self-end">
+                            <HeaderToolbar />
+                        </div>
+                    </div>
+                </header>
+
+                {/* 컨텐츠 */}
+                <main
+                    className={clsx(
+                        "flex bg-white w-full h-full flex-col max-h-[400px] sm:max-h-none sm:flex-row ",
+                        baloo.className
+                    )}
+                >
+                    <div className="relative w-full h-full rounded-none overflow-hidden flex bg-black mt-0.5 min-h-[185px] max-h-[400px] sm:rounded-lg sm:min-h-0 sm:max-h-full">
+                        <div ref={playerContainerRef} className="absolute top-0 left-0 w-full h-full">
+                            <div className="relative w-full h-full flex flex-col justify-between sm:flex-row">
+                                {/* 플레이어 */}
+                                <div className="relative w-full h-full">
+                                    {displayClock && <ClockWidget />}
+                                    {displayEllapsed && <EllapsedWidget startTime={startTime.current} />}
+                                    <BGMPlayer />
+                                </div>
+
+                                {/* 툴바 */}
+                                <PlayerToolbar fullscreenRef={playerContainerRef} />
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                {/* 모달 */}
+                <Modal title="Category" isOpen={displayCategory} onClose={onCloseCategory}>
+                    <CategoryWidget onApply={onApplyCategory} />
+                </Modal>
+
+                {/* 토스트 */}
+                <ViewInfoToast />
+
+                {/* 푸터 */}
+                <footer className="flex justify-end w-full pt-5 text-xs text-gray-400">
+                    <div className="flex flex-col items-end px-2">
+                        <div className="flex space-x-2">
+                            <i>@ 2024 </i>
+                            <i>developed by inhan</i>
+                            <a
+                                href="https://github.com/your-github-username"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-base hover:text-gray-600 transition"
+                            >
+                                <FaGithub />
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://iconscout.com/icons/music" target="_blank">
+                                Music
+                            </a>{" "}
+                            by{" "}
+                            <a href="https://iconscout.com/contributors/roundicons-com" target="_blank">
+                                Roundicons.com
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    );
 }
