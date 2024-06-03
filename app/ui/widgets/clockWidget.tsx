@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { usePlayerStore } from "../playerStore";
-import { findPositioningParent, useDraggable, useWindowSize } from "../inhan-ui";
+import { useDraggable } from "../inhan-ui";
 import { useDynamicFont } from "../hooks/useDynamicFont";
 
 export const ClockWidget: React.FC = memo(function ClockWidget() {
@@ -28,7 +28,7 @@ export const ClockWidget: React.FC = memo(function ClockWidget() {
 
     return (
         <div ref={draggableRef} className="absolute flex items-center opacity-80 cursor-pointer hover:opacity-90">
-            <div ref={clockRef} className="text-white whitespace-nowrap">
+            <div ref={clockRef} className="text-white whitespace-nowrap" suppressHydrationWarning>
                 {dayjs(time).format("A hh:mm")}
             </div>
         </div>

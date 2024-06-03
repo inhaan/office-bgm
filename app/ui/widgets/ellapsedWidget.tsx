@@ -32,7 +32,7 @@ export const EllapsedWidget: React.FC<EllapsedWidgetProps> = memo(function Ellap
 
     return (
         <div ref={draggableRef} className="absolute flex items-center opacity-80 cursor-pointer hover:opacity-90">
-            <div ref={ellapsedRef} className="text-white text-3xl">
+            <div ref={ellapsedRef} className="text-white text-3xl" suppressHydrationWarning>
                 {dayjs.duration(ellpased).format("HH:mm:ss")}
             </div>
         </div>
