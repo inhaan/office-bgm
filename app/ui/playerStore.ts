@@ -35,6 +35,10 @@ interface PlayerState {
     closeInfoToastEver: boolean;
     getCloseInfoToastEver: () => boolean;
     setCloseInfoToastEver: (closeInfoToastEver: boolean) => void;
+
+    alarmInstallEver: boolean;
+    getAlarmInstallEver: () => boolean;
+    setAlarmInstallEver: (alarmInstallEver: boolean) => void;
 }
 
 const initialSelectedCategories = bgm.map(({ category }) => category);
@@ -105,6 +109,10 @@ export const usePlayerStore = create<PlayerState>()(
             closeInfoToastEver: false,
             getCloseInfoToastEver: () => get().closeInfoToastEver,
             setCloseInfoToastEver: (closeInfoToastEver: boolean) => set({ closeInfoToastEver }),
+
+            alarmInstallEver: false,
+            getAlarmInstallEver: () => get().alarmInstallEver,
+            setAlarmInstallEver: (alarmInstallEver: boolean) => set({ alarmInstallEver }),
         }),
         {
             name: "player-storage",
@@ -117,6 +125,7 @@ export const usePlayerStore = create<PlayerState>()(
                     "ellapsedPosition",
                     "likes",
                     "closeInfoToastEver",
+                    "alarmInstallEver",
                 ]),
         }
     )
