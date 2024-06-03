@@ -3,7 +3,7 @@
 import { Baloo_2 } from "next/font/google";
 import { Modal } from "./ui/inhan-ui";
 import clsx from "clsx";
-import { CategoryWidget, ClockWidget, EllapsedWidget } from "./ui/widgets";
+import { CategoryWidget, ClockWidget, EllapsedWidget, InstallAppWidget } from "./ui/widgets";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { useCallback, useRef } from "react";
@@ -13,7 +13,6 @@ import { PlayerToolbar } from "./ui/PlayerToolbar";
 import { FaGithub } from "react-icons/fa6";
 import { ViewInfoToast } from "./ui/ViewInfoToast";
 import { HeaderToolbar } from "./ui/HeaderToolbar";
-import { useInstallApp } from "./ui/hooks/useInstallApp";
 
 dayjs.extend(duration);
 const baloo = Baloo_2({ subsets: ["latin"], weight: ["400", "800"] });
@@ -31,16 +30,16 @@ export default function Home() {
         setDisplayCategory(false);
     }, [setDisplayCategory]);
 
-    // PWA 설치 알림
-    useInstallApp();
-
     return (
         <div className="bg-white flex justify-center items-start w-full h-full sm:items-center">
             <div className="w-full h-full max-w-5xl max-h-max flex flex-col sm:w-4/5 sm:max-h-[600px]">
                 {/* 헤더 */}
                 <header className={clsx("flex flex-col-reverse items-center p-2 sm:p-5 sm:flex-col", baloo.className)}>
                     <div className="w-full flex flex-col justify-between sm:flex-row">
-                        <div className="font-extrabold text-xl self-start sm:text-2xl">Office BGM</div>
+                        <div className="flex items-center gap-3 font-extrabold text-xl self-start sm:text-2xl">
+                            <span>Office BGM</span>
+                            <InstallAppWidget />
+                        </div>
                         <div className="flex self-end">
                             <HeaderToolbar />
                         </div>
