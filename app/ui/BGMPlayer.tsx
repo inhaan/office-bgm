@@ -13,12 +13,29 @@ const opts: YouTubeProps["opts"] = {
 };
 
 export const BGMPlayer = memo(function BGMPlayer() {
-    const { getCurrentBGM } = usePlayerStore();
+    const { getCurrentBGM, nextBGM } = usePlayerStore();
     const currentBGM = getCurrentBGM();
 
     const onPlayerReady: YouTubeProps["onReady"] = useCallback((event: YouTubeEvent) => {
         event.target.playVideo();
     }, []);
 
-    return <YouTube videoId={currentBGM} className="w-full h-full" opts={opts} onReady={onPlayerReady} />;
+    const onPlayerError: YouTubeProps["onError"] = useCallback(() => {
+        nextBGM();
+    }, [nextBGM]);
+
+    const onPlayerEnd: YouTubeProps["onEnd"] = useCallback(() => {
+        nextBGM();
+    }, [nextBGM]);
+
+    return (
+        <YouTube
+            videoId={currentBGM}
+            className="w-full h-full"
+            opts={opts}
+            onReady={onPlayerReady}
+            onError={onPlayerError}
+            onEnd={onPlayerEnd}
+        />
+    );
 });
