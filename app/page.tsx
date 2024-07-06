@@ -92,6 +92,9 @@ export default function Home() {
                             >
                                 <FaGithub />
                             </a>
+                            <a href="https://forms.gle/REpgswzVYHWvpeoB7" target="_blank" rel="noopener noreferrer">
+                                문의하기
+                            </a>
                         </div>
                         <div>
                             <a href="https://iconscout.com/icons/music" target="_blank">
